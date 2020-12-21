@@ -1,0 +1,163 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-size: 62.5%;
+    font-family: 'Artifika', serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+}
+main{
+    width: 100%;
+    height: 100vh;
+    background-color: lavender;
+}
+
+.title{
+    height: 10vh;
+    position: absolute;
+    width: 50%;
+    min-width: max-content;
+    left: 25%;
+    margin-top: 20px;
+    border: 1px solid black;
+    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid blue;
+    border-radius: 15px;
+}
+.picture{
+    width: 100%;
+    padding-top: 30px;
+    margin-top: calc(20px + 5vh);
+    height: 40vh;
+    margin-bottom: 2vh;
+    background-color: beige;
+    border: 1px solid blue;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.information{
+    display: flex;
+    flex-direction: column;
+}
+.description{
+    width: 100%;
+    padding: 5px;
+    display: flex;   
+}
+.type{
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    margin-block: 5px;
+    justify-content: space-evenly;   
+   
+}
+.other{
+    width: 100%;
+    padding: 5px;
+    display: flex;   
+    margin-block: 5px;
+    justify-content: space-evenly; 
+}
+
+img{
+    height: 90%;
+    width: 90%;
+}
+
+.textd{
+    text-align: justify;
+}
+.picture_pokemon{
+    max-height: 40vh;
+    max-width: 40vh;
+}
+
+.tipos{
+    border-radius: 10px;
+    padding: 5px;
+    color: blanchedalmond;
+}
+.bnav{
+    width: 100%;
+    padding: 5px;
+    display: flex;   
+    margin-block: 5px;
+    justify-content: space-around;
+}
+button{
+    border-radius: 20px;
+    background-color: antiquewhite;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+.background-fairy{
+    background-color: rgb(226, 43, 150);
+}
+.background-water{
+    background-color: rgb(43, 122, 226);
+}
+.background-fire{
+    background-color: rgb(226, 147, 43);
+}
+.background-dark{
+    background-color: rgb(14, 13, 13);
+}
+.background-flying{
+    background-color: rgb(121, 104, 114);
+}
+.background-bug{
+    background-color: rgb(101, 226, 43);
+}
+.background-poison{
+    background-color: rgb(174, 43, 226);
+}
+.background-ice{
+    background-color: rgba(43, 205, 226, 0.774);
+}
+.background-ghost{
+    background-color: rgb(63, 3, 43);
+}
+.background-grass{
+    background-color: rgb(49, 226, 43);
+}
+.background-ground{
+    background-color: rgb(174, 180, 155);
+}
+.background-rock{
+    background-color: rgb(230, 203, 115);
+}
+.background-steel{
+    background-color: rgb(39, 37, 38);
+}
+.background-electric{
+    background-color: rgb(255, 238, 4);
+}
+.background-normal{
+    background-color: rgb(160, 156, 159);
+}
+.background-psychi{
+    background-color: rgb(226, 162, 43);
+}
+.background-fighting{
+    background-color: rgb(238, 20, 4);
+}
+.background-dragon{
+    background-color: rgb(98, 43, 226);
+}
