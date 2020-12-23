@@ -8,12 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Artifika&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css">
 </head>
-<body onload="onLoad(45)">
+<body>
+    <header class="header">        
+        <div class="header__pri">
+        <img class="header__pri__img" src="assets\img\Pokeapi-logo.svg" alt="App de PokeAPI">
+        </div>        
+            <input id="navbar" type="checkbox">
+            <label for="navbar">
+                <div class="header__menu">
+                    <span class="header__menu__line"></span>
+                </div>
+            </label>
+                <ul>
+                    <li><a href="index.html">Ver todos</a></li>
+                    <li><a on href="main.html">Individual</a></li>
+                    <li><a onclick="newGame()" href="#">¿Quién es ese Pokemón?</a></li>
+                </ul>            
+    </header>
     <main>
         <div class="searcher">
             <select name="poke-selector" id="poke-selector">
 
             </select>
+            <input type="search" name="search" id="search">
         </div>
         <div class="title">
             
@@ -37,6 +54,6 @@
 
         </div>
     </main>
-    <script src="pokemon.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

@@ -6,8 +6,9 @@ urlDescription='https://pokeapi.co/api/v2/pokemon-species/';
 const title = document.querySelector('.title');   
 const typesContainer = document.querySelector('.type'); 
 const otherContainer = document.querySelector('.other'); 
-imageContainer=document.querySelector('.picture');
-parContainer=document.querySelector('.description');
+const imageContainer=document.querySelector('.picture');
+const parContainer=document.querySelector('.description');
+const pokeSelector=document.querySelector('.poke-selector');
 
 function onLoad(number){
     getData(url,number)
@@ -37,6 +38,7 @@ function getData(url,number){
     fetch(`${url}${number}`).then(function(response){
         return response.json()
     }).then(function(json){
+        
         let pokemon = json
         iniciar(pokemon,number)
     })
@@ -96,7 +98,6 @@ function showImage(objectURL,number){
     image.src = objectURL;
     image.alt=number;
     image.classList.add('picture_pokemon');
-    
     imageContainer.appendChild(image)
 }
 
@@ -207,3 +208,34 @@ function setType(tipo, p){
     }
     return conversion[tipo]
 }
+
+function buildPokemon(i){
+    let pokemonArray = []
+    let pokemon = {
+        nombre:"",
+        imagen:"",
+    }
+             
+         fetch(`${url}${i}`).then(function(response){
+            return response.json();            
+            }).then(function(json){
+               
+                pokemon.nombre = json.name;                
+        })
+         fetch(`${urlImg}${i}.svg`).then(function(response){
+            return response.blob();            
+            }).then(function(blob){
+                pokemon.imagen = URL.createObjectURL(blob);                
+        })
+
+         pokemonArray[i] = pokemon;
+         console.log(pokemonArray);
+    
+    
+}
+function a(){
+    for (let i = 1; i < 10; i++) {  
+        buildPokemon(i)
+    }
+}
+ a()
