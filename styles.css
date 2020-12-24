@@ -25,9 +25,9 @@ main{
 .title{
     height: 10vh;
     position: absolute;
-    width: 50%;
     min-width: max-content;
-    left: 25%;
+    left: 5%;
+    right: 5%;
     margin-top: 20px;
     border: 1px solid black;
     background-color: aquamarine;
@@ -335,4 +335,11 @@ header input {
     header li a:hover {
       color: blue;
     }
+
     }
+@media screen and (min-width: 900px) {
+    .description{
+        display: flex;
+        justify-content: center;
+    }
+}

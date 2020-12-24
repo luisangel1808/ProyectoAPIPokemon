@@ -13,6 +13,7 @@ const typesContainer = document.querySelector('.type');
 const otherContainer = document.querySelector('.other'); 
 const imageContainer=document.querySelector('.picture');
 const parContainer=document.querySelector('.description');
+counterContainer = document.createElement('div');
 const pokeSelector=document.getElementsByName('poke-selector')[0];
 document.getElementById("poke-selector").onchange = changeListener;
 const buttonNavContainer = document.querySelector('.bnav'); 
@@ -50,7 +51,7 @@ class Poke{
      showImage(siluet){
         const imagen = document.createElement('img');
         imagen.src = this.image;  
-        imagen.alt ='No se encontró la imagen'    
+        imagen.alt ='Cargando imagen Pokemón'    
         imagen.classList.add('picture_pokemon');
         if(siluet){
           imagen.classList.add('img-silueta');
@@ -263,14 +264,12 @@ function changeListener(){
 
 class Game{
   constructor(){
-
     this.counterInit();    
     this.questions = 10;
     this.right = 0;
     this.wrong = 0;
     this.correct;
-    this.newQuestion(); 
-    
+    this.newQuestion();     
   }
   newQuestion(){
     removeElements();
@@ -342,8 +341,8 @@ class Game{
     }
   }
   removeCounters(){
-    while (this.counterContainer.lastElementChild) {
-      this.counterContainer.removeChild(this.counterContainer.lastElementChild);
+    while (counterContainer.lastElementChild) {
+      counterContainer.removeChild(counterContainer.lastElementChild);
     } 
   }  
   
@@ -352,17 +351,18 @@ class Game{
     this.newQuestion()
   }
   counterInit(){
-          
-    this.counterContainer = document.createElement('div');  
+    this.removeCounters()      
+      
     console.log(this.counterContainer)
     this.wrongView = document.createElement('p'); 
     this.rightView = document.createElement('p'); 
-    this.counterContainer.appendChild(this.wrongView);
-    this.counterContainer.appendChild(this.rightView);
-    this.counterContainer.classList.add('counter');
+    
+    counterContainer.appendChild(this.wrongView);
+    counterContainer.appendChild(this.rightView);
+    counterContainer.classList.add('counter');
     this.wrongView.classList.add('wrong');
     this.rightView.classList.add('correct');
-    main.appendChild(this.counterContainer);
+    main.appendChild(counterContainer);
     
   }
   modifyCounter(){
