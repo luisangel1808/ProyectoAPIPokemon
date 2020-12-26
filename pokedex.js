@@ -21,3 +21,9 @@ function createImage(url,id){
     enlace.appendChild(image)
     container.appendChild(enlace)
 }
+
+function pokedex(){
+    for (let i = 1; i <=maxPokemon; i++) {
+        pokemonArray[i].showImage()  
+    }
+}

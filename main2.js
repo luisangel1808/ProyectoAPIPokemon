@@ -8,32 +8,9 @@ let number = 1;
 const maxPokemon = 151;
 
     const main = document.querySelector('main');
-    const title = document.querySelector('.title');   
-    const typesContainer = document.querySelector('.type'); 
-    const otherContainer = document.querySelector('.other'); 
-    const imageContainer=document.querySelector('.picture');
-    const parContainer=document.querySelector('.description');
     counterContainer = document.createElement('div');
     const pokeSelector=document.getElementsByName('poke-selector')[0];
     document.getElementById("poke-selector").onchange = changeListener;
-    const buttonNavContainer = document.querySelector('.bnav'); 
-    const forward = document.createElement('button');
-    const back = document.createElement('button');
-    forward.type = 'button';
-    back.type = 'button';
-    back.innerText = 'Anterior';
-    forward.innerText = 'Siguiente';
-    buttonNavContainer.appendChild(back); 
-    buttonNavContainer.appendChild(forward);
-
-forward.onclick = ()=>{  
-  number<pokemonArray.length-1 ? number++: number=1;
-  showAll(number);
-};
-back.onclick = ()=> {    
-    number>1 ? number--: number=pokemonArray.length-1;
-    showAll(number); 
-};
 
 class Poke{
     constructor(){
@@ -44,43 +21,106 @@ class Poke{
         this.height;
         this.image;
         this.id;
+        this.information;
     }
+
+    showAll() {
+      pokemonArray[number].removeElements();      
+      pokemonArray[number].showTitle();
+      pokemonArray[number].showImage(false);
+      pokemonArray[number].showInformation()
+    }
+
     showImage(siluet){
         const imagen = document.createElement('img');
         imagen.src = this.image;  
         imagen.alt ='Cargando imagen Pokemón'    
         imagen.classList.add('picture_pokemon');
+        const imageContainer=document.createElement('div');
+        imageContainer.classList.add('picture');
         if(siluet){
           imagen.classList.add('img-silueta');
         }        
         imageContainer.appendChild(imagen)
+        main.appendChild(imageContainer)
     }
     showTitle(){
+        const title = document.createElement('div'); 
+        title.classList.add('title');
         const titulo = document.createElement('h2');
         titulo.textContent = `${this.id} ${this.name}`;      
         title.appendChild(titulo);
+        main.appendChild(title);
     }
     showDescription(){
+        const parContainer = document.createElement('div'); 
+        parContainer.classList.add('description');
         const descripcion = document.createElement('p');
         descripcion.textContent = this.description;
-        parContainer.appendChild(descripcion);
+        parContainer.appendChild(descripcion); 
+        this.information.appendChild(parContainer);
     }
     showTypes(){
+        const typesContainer = document.createElement('div');
+        typesContainer.classList.add('type');
         for (let i = 0; i < this.types.length; i++) {
             const p = document.createElement('p');            
-            p.innerText = setType(this.types[i],p); 
+            p.innerText = setType(this.types[i],p);
             p.classList.add('tipos');
             typesContainer.appendChild(p)
-        }
+            this.information.appendChild(typesContainer);
+        }        
     }
     showPhysycal(){
+        const otherContainer = document.createElement('div');
+        otherContainer.classList.add('other');
         const pWeight = document.createElement('p');
         const pHeight = document.createElement('p');
         pHeight.textContent = `Altura: ${this.height}m`;
         pWeight.textContent = `Peso: ${this.weight}kg`;
         otherContainer.appendChild(pHeight); 
-        otherContainer.appendChild(pWeight); 
+        otherContainer.appendChild(pWeight);
+        this.information.appendChild(otherContainer); 
     }
+    showButtons(){
+      const buttonsContainer = document.createElement('div');
+      buttonsContainer.classList.add('bnav');
+      const forward = document.createElement('button');
+      const back = document.createElement('button');
+      forward.type = 'button';
+      back.type = 'button';
+      back.innerText = 'Anterior';
+      forward.innerText = 'Siguiente';
+      buttonsContainer.appendChild(back); 
+      buttonsContainer.appendChild(forward);
+      this.information.appendChild(buttonsContainer);
+
+      forward.onclick = ()=>{  
+        number<pokemonArray.length-1 ? number++: number=1;
+        this.showAll(number);
+      };
+      back.onclick = ()=> {    
+          number>1 ? number--: number=pokemonArray.length-1;
+          this.showAll(number); 
+      };
+
+  }
+
+  showInformation(){
+    this.information = document.createElement('div');
+    this.information.classList.add('information');
+    main.appendChild(this.information);           
+    this.showPhysycal();
+    this.showTypes();
+    this.showDescription();
+    this.showButtons();
+}
+
+  removeElements(){
+    while (main.lastElementChild) {
+       main.removeChild(main.lastElementChild);
+    } 
+  }
 }
 
  async function buildPokemon(i){
@@ -116,7 +156,7 @@ class Poke{
     if(i===maxPokemon){
       number = parseInt(Math.random()*maxPokemon-1)+1;
       console.timeEnd()
-      showAll(number);
+      pokemonArray[1].showAll();
       console.log('number')
     }
 }
@@ -127,21 +167,14 @@ function capitalize(word){
 
 function start(){ 
   console.time()
+  if (pokemonArray.length==maxPokemon+1) {
+    pokemonArray[number].showAll();
+  }
+  else{
     for (let i = 1; i <=maxPokemon; i++) {
       buildPokemon(i)
-  }     
-  
-}
-
- start()
-
-function showAll(i) {
-    removeElements();
-    pokemonArray[i].showImage(false);
-    pokemonArray[i].showTitle();
-    pokemonArray[i].showDescription();
-    pokemonArray[i].showTypes();
-    pokemonArray[i].showPhysycal()
+    }    
+  } 
 }
 
 function addOptions(array) {     
@@ -159,24 +192,6 @@ function changeListener(){
     number = value;
     removeElements();
     showAll(value);      
-}
-
-function removeElements() {
-    while (title.lastElementChild) {
-        title.removeChild(title.lastElementChild);
-    }
-    while (typesContainer.lastElementChild) {
-        typesContainer.removeChild(typesContainer.lastElementChild);
-    }
-    while (otherContainer.lastElementChild) {
-        otherContainer.removeChild(otherContainer.lastElementChild);
-    }
-    while (imageContainer.lastElementChild) {
-        imageContainer.removeChild(imageContainer.lastElementChild);
-    }
-    while (parContainer.lastElementChild) {
-        parContainer.removeChild(parContainer.lastElementChild);
-    }   
 }
 
  function setType(tipo, p){
@@ -261,8 +276,7 @@ function removeElements() {
 }
 
 class Game{
-  constructor(){
-    this.counterInit();    
+  constructor(){   
     this.questions = 10;
     this.right = 0;
     this.wrong = 0;
@@ -270,30 +284,37 @@ class Game{
     this.newQuestion();     
   }
   newQuestion(){
-    removeElements();
-    this.removeButtons();
+    removeAll() 
+    this.removeCounters() 
     this.setTitle();
-    this.options= this.fourRandomPokemon();
-    this.createOptions(this.options);    
+    this.options= this.fourRandomPokemon();        
     this.options[this.chooseCorrect(this.options)].showImage(true);
+    this.createOptions(this.options);
+    this.counterInit(); 
     this.modifyCounter();
   }
   setTitle(){
+    const title = document.createElement('div'); 
+    title.classList.add('title');
     const titulo = document.createElement('h2');
     titulo.textContent = `¿Quién es ese Pokemón?`;      
     title.appendChild(titulo);
+    main.appendChild(title);
   }
   createOptions(options){
     let optionsArr = [];
+    const buttonOptContainer = document.createElement('div'); 
+    buttonOptContainer.classList.add('bnav');
     for (let i = 0; i < 4; i++) {
       optionsArr[i]=document.createElement('button');
       optionsArr[i].type = 'button';
       optionsArr[i].innerText = `${options[i].name}`;
-      buttonNavContainer.appendChild(optionsArr[i]);
+      buttonOptContainer.appendChild(optionsArr[i]);
       optionsArr[i].onclick = ()=>{
         this.selected(i)
       }
     }
+    main.appendChild(buttonOptContainer);
   }
   chooseCorrect(options){
     this.correct = parseInt(Math.random()*options.length);
@@ -311,11 +332,6 @@ class Game{
     }
     return optionsArray;
   }
-  removeButtons() {
-    while (buttonNavContainer.lastElementChild) {
-        buttonNavContainer.removeChild(buttonNavContainer.lastElementChild);
-    }
-  }
   removeCounters(){
     while (counterContainer.lastElementChild) {
       counterContainer.removeChild(counterContainer.lastElementChild);
@@ -325,8 +341,7 @@ class Game{
     this.correct===number ? this.right++: this.wrong++;   
     this.newQuestion()
   }
-  counterInit(){
-    this.removeCounters()      
+  counterInit(){     
     this.wrongView = document.createElement('p'); 
     this.rightView = document.createElement('p'); 
     counterContainer.appendChild(this.wrongView);
@@ -342,8 +357,7 @@ class Game{
   }
 }
 
-function newGame(){
- 
+function newGame(){ 
   let juego = new Game();
 }
 
@@ -352,15 +366,16 @@ function pokedex(){
   for (let i = 1; i <=maxPokemon; i++) {
     const image = document.createElement('img');
     image.classList.add('pokedexImg');
-    const enlace = document.createElement('a');
-    const vinculo = `pokemon.html`;
-    enlace.href= (vinculo);
     image.src = pokemonArray[i].image;
-    image.alt = 'id';
+    image.id=i;
+    image.alt = `Pokémon${image.id}`;
+    image.onclick = ()=>{  
+      number=image.id;
+      pokemonArray[number].showAll();
+    };
     container = document.createElement('div');
     container.classList.add('pokedexC');
-    enlace.appendChild(image);
-    container.appendChild(enlace); 
+    container.appendChild(image); 
     main.appendChild(container);
   }
 }
