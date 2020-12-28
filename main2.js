@@ -11,6 +11,7 @@ const maxPokemon = 151;
     counterContainer = document.createElement('div');
     const pokeSelector=document.getElementsByName('poke-selector')[0];
     document.getElementById("poke-selector").onchange = changeListener;
+    const menu = document.querySelector(".menu");
 
 class Poke{
     constructor(){
@@ -22,27 +23,28 @@ class Poke{
         this.image;
         this.id;
         this.information;
+        
     }
 
     showAll() {
       pokemonArray[number].removeElements();      
       pokemonArray[number].showTitle();
       pokemonArray[number].showImage(false);
-      pokemonArray[number].showInformation()
+      pokemonArray[number].showInformation();
     }
 
     showImage(siluet){
         const imagen = document.createElement('img');
         imagen.src = this.image;  
-        imagen.alt ='Cargando imagen Pokemón'    
+        imagen.alt ='Cargando imagen Pokemón';    
         imagen.classList.add('picture_pokemon');
         const imageContainer=document.createElement('div');
         imageContainer.classList.add('picture');
         if(siluet){
           imagen.classList.add('img-silueta');
         }        
-        imageContainer.appendChild(imagen)
-        main.appendChild(imageContainer)
+        imageContainer.appendChild(imagen);
+        main.appendChild(imageContainer);
     }
     showTitle(){
         const title = document.createElement('div'); 
@@ -67,7 +69,7 @@ class Poke{
             const p = document.createElement('p');            
             p.innerText = setType(this.types[i],p);
             p.classList.add('tipos');
-            typesContainer.appendChild(p)
+            typesContainer.appendChild(p);
             this.information.appendChild(typesContainer);
         }        
     }
@@ -94,14 +96,13 @@ class Poke{
       buttonsContainer.appendChild(back); 
       buttonsContainer.appendChild(forward);
       this.information.appendChild(buttonsContainer);
-
       forward.onclick = ()=>{  
         number<pokemonArray.length-1 ? number++: number=1;
-        this.showAll(number);
+        this.showAll();
       };
       back.onclick = ()=> {    
           number>1 ? number--: number=pokemonArray.length-1;
-          this.showAll(number); 
+          this.showAll(); 
       };
 
   }
@@ -133,7 +134,7 @@ class Poke{
             pokemon.weight = json.weight/10;
             pokemon.height = json.height/10; 
             for (let i = 0; i < json.types.length; i++) {     
-                pokemon.types[i] = json.types[i].type.name  
+                pokemon.types[i] = json.types[i].type.name;  
             }           
         })
         await fetch(`${urlImg}${i}.svg`).then(function(response){
@@ -142,23 +143,25 @@ class Poke{
             pokemon.image = URL.createObjectURL(blob);                
         })  
         await fetch(`${urlDescription}${i}/`).then(function(response){
-            return response.json()
+            return response.json();
         }).then(function(json){
             let i = 0;
             while (json.flavor_text_entries[i].language.name!="es") {
                 i++;
             }
-        let description = json.flavor_text_entries[i].flavor_text
+        let description = json.flavor_text_entries[i].flavor_text;
         description = description.replace(/\n|\r/g, " ");
-        pokemon.description = description
+        pokemon.description = description;
     })
     pokemonArray[i] = pokemon;  
-    if(i===maxPokemon){
-      number = parseInt(Math.random()*maxPokemon-1)+1;
-      console.timeEnd()
-      pokemonArray[1].showAll();
-      console.log('number')
-    }
+    
+      if(pokemonArray.length===maxPokemon+1){
+        //number = parseInt(Math.random()*maxPokemon-1)+1;
+        number = 1
+        console.timeEnd();
+        pokemonArray[1].showAll();
+      }
+    
 }
 
 function capitalize(word){
@@ -166,13 +169,13 @@ function capitalize(word){
 }
 
 function start(){ 
-  console.time()
+  console.time();
   if (pokemonArray.length==maxPokemon+1) {
     pokemonArray[number].showAll();
   }
   else{
     for (let i = 1; i <=maxPokemon; i++) {
-      buildPokemon(i)
+      buildPokemon(i);
     }    
   } 
 }
@@ -285,7 +288,7 @@ class Game{
   }
   newQuestion(){
     removeAll() 
-    this.removeCounters() 
+    this.removeCounters(); 
     this.setTitle();
     this.options= this.fourRandomPokemon();        
     this.options[this.chooseCorrect(this.options)].showImage(true);
@@ -311,24 +314,23 @@ class Game{
       optionsArr[i].innerText = `${options[i].name}`;
       buttonOptContainer.appendChild(optionsArr[i]);
       optionsArr[i].onclick = ()=>{
-        this.selected(i)
+        this.selected(i);
       }
     }
     main.appendChild(buttonOptContainer);
   }
   chooseCorrect(options){
     this.correct = parseInt(Math.random()*options.length);
-    return this.correct
+    return this.correct;
   }
   fourRandomPokemon(){
     let optionsArray = [];
     let numbersArray = [];
     for(let i = 1; i<5; i++){
       let number = Math.round(Math.random()*(maxPokemon-1))+1;
-      numbersArray.includes(number)
-      ?i--
-      : optionsArray.push(pokemonArray[number]); 
-        numbersArray.push(number); 
+      numbersArray.includes(number)?i--: 
+      optionsArray.push(pokemonArray[number]); 
+      numbersArray.push(number); 
     }
     return optionsArray;
   }
@@ -339,7 +341,7 @@ class Game{
   }    
   selected(number){
     this.correct===number ? this.right++: this.wrong++;   
-    this.newQuestion()
+    this.newQuestion();
   }
   counterInit(){     
     this.wrongView = document.createElement('p'); 
@@ -384,5 +386,50 @@ function removeAll() {
   while (main.lastElementChild) {
       main.removeChild(main.lastElementChild);
   }
-
 }
+startupTouch()
+function startupTouch() {  
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let difference = 0;
+    main.addEventListener("touchstart", function(event){
+      touchStartX = event.changedTouches[0].screenX;
+    })
+    main.addEventListener("touchend", function(event){
+      touchEndX = event.changedTouches[0].screenX;
+      difference = touchEndX - touchStartX;
+      if(document.querySelector('.information')!=null){
+        if (difference<-20) {
+          number<pokemonArray.length-1 ? number++: number=1;
+          pokemonArray[number].showAll();
+        }
+        else if(20<difference){
+          number>1 ? number--: number=pokemonArray.length-1;
+          pokemonArray[number].showAll(); 
+        }
+      }
+    })  
+}
+
+
+
+const toggle = document.querySelector(".toggle");
+
+ 
+/* Toggle mobile menu */
+function toggleMenu() {
+    if (menu.classList.contains("active")) {
+        menu.classList.remove("active");
+         
+        // adds the menu (hamburger) icon
+        toggle.querySelector("a").innerHTML = "<i class=’fas fa-bars’></i>";
+    } else {
+        menu.classList.add("active");
+        toggle.querySelector("a").innerHTML = "<i class=’fas fa-times’></i>";
+    }
+}
+ 
+/* Event Listener */
+toggle.addEventListener("click", toggleMenu, false);
+menu.addEventListener("click", toggleMenu, false);
+const items = document.querySelectorAll(".item");

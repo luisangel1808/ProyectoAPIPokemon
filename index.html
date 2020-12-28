@@ -7,24 +7,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Artifika&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 </head>
 <body onload="start()">
-    <header class="header">        
-        <div class="header__pri">
-        <img class="header__pri__img" src="assets\img\Pokeapi-logo.svg" alt="App de PokeAPI">
-        </div>        
-            <input id="navbar" type="checkbox">
-            <label for="navbar">
-                <div class="header__menu">
-                    <span class="header__menu__line"></span>
-                </div>
-            </label>
-                <ul>
-                    <li><a onclick="pokedex()" href="#">Ver todos</a></li>
-                    <li><a onclick="start()" href="#">Individual</a></li>
-                    <li><a onclick="newGame()" href="#">¿Quién es ese Pokemón?</a></li>
-                </ul>            
-    </header>
+    <header>  
+            <nav>
+                <ul class="menu">
+                    <li class="logo"><a href="#">LAPokedex</a></li>
+                    <li class="item button"><a onclick="start()" href="#">Individual</a></li>
+                    <li class="item button"><a onclick="pokedex()" href="#">Pokedéx</a></li>
+                    <li class="item button"><a onclick="newGame()" href="#">Adivina el Pokemón</a></li>
+                    <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+                </ul>
+            </nav>
+    </header>      
     <main>
         <div class="searcher">
             <select name="poke-selector" id="poke-selector">
