@@ -21,7 +21,6 @@ body{
 main{
     width: 100%;
     min-height: 93vh;
-    
 }
 
 .title{
@@ -127,7 +126,7 @@ button{
     height: 50px;
 }
 .correct{
-    background-color: rgb(47, 255, 64);
+    background-color: rgb(32, 204, 46);
 }
 .wrong{
     background-color: red;
@@ -215,22 +214,19 @@ a {
     color: white;
     text-decoration: none;
 }
-.menu{   
-    list-style-type: none;
-}
+
 .logo {
     font-size: 20px;
     padding: 7.5px 10px 7.5px 0;
 }
-.item {
-    padding: 10px;
-}
+
 
 .menu {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    list-style-type: none;
 }
 .menu li a {
     display: block;
@@ -240,14 +236,21 @@ a {
     width: 100%;
     text-align: center;
     display: none;
+    padding: 10px;
 }
 .active .item {
     display: block;
+}
+.toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 @media all and (min-width: 700px) {
     .logo {
         flex: 1;
+        margin: auto 0;
     }
     .menu li.button a {
         padding: 8px;

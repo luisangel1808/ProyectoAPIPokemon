@@ -413,23 +413,15 @@ function startupTouch() {
 
 
 
-const toggle = document.querySelector(".toggle");
+const toggle = document.querySelector('.toggle');
 
- 
-/* Toggle mobile menu */
 function toggleMenu() {
-    if (menu.classList.contains("active")) {
-        menu.classList.remove("active");
-         
-        // adds the menu (hamburger) icon
-        toggle.querySelector("a").innerHTML = "<i class=’fas fa-bars’></i>";
+    if (menu.classList.contains('active')) {
+        menu.classList.remove('active');      
     } else {
-        menu.classList.add("active");
-        toggle.querySelector("a").innerHTML = "<i class=’fas fa-times’></i>";
+        menu.classList.add('active');        
     }
 }
- 
-/* Event Listener */
-toggle.addEventListener("click", toggleMenu, false);
-menu.addEventListener("click", toggleMenu, false);
-const items = document.querySelectorAll(".item");
+
+toggle.addEventListener('click', toggleMenu, false);
+const items = document.querySelectorAll('.item');
