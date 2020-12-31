@@ -7,11 +7,12 @@ let pokemonArray = [];
 let number = 1;
 const maxPokemon = 151;
 
-    const main = document.querySelector('main');
-    counterContainer = document.createElement('div');
-    const pokeSelector=document.getElementsByName('poke-selector')[0];
-    document.getElementById("poke-selector").onchange = changeListener;
-    const menu = document.querySelector(".menu");
+const main = document.querySelector('main');
+const counterContainer = document.createElement('div');
+document.querySelector('input').oninput = changeListener;
+const menu = document.querySelector('.menu');
+const list = document.querySelector('.list');
+const searchSection = document.querySelector('.search');
 
 class Poke{
     constructor(){
@@ -22,8 +23,7 @@ class Poke{
         this.height;
         this.image;
         this.id;
-        this.information;
-        
+        this.information;        
     }
 
     showAll() {
@@ -67,7 +67,7 @@ class Poke{
         typesContainer.classList.add('type');
         for (let i = 0; i < this.types.length; i++) {
             const p = document.createElement('p');            
-            p.innerText = setType(this.types[i],p);
+            p.innerText = this.setType(this.types[i],p);
             p.classList.add('tipos');
             typesContainer.appendChild(p);
             this.information.appendChild(typesContainer);
@@ -104,7 +104,6 @@ class Poke{
           number>1 ? number--: number=pokemonArray.length-1;
           this.showAll(); 
       };
-
   }
 
   showInformation(){
@@ -117,87 +116,7 @@ class Poke{
     this.showButtons();
 }
 
-  removeElements(){
-    while (main.lastElementChild) {
-       main.removeChild(main.lastElementChild);
-    } 
-  }
-}
-
- async function buildPokemon(i){
-        let pokemon = new Poke();             
-        await fetch(`${url}${i}`).then(function(response){
-            return response.json();            
-        }).then(function(json){
-            pokemon.id = json.id; 
-            pokemon.name = capitalize(json.name);  
-            pokemon.weight = json.weight/10;
-            pokemon.height = json.height/10; 
-            for (let i = 0; i < json.types.length; i++) {     
-                pokemon.types[i] = json.types[i].type.name;  
-            }           
-        })
-        await fetch(`${urlImg}${i}.svg`).then(function(response){
-            return response.blob();            
-        }).then(function(blob){
-            pokemon.image = URL.createObjectURL(blob);                
-        })  
-        await fetch(`${urlDescription}${i}/`).then(function(response){
-            return response.json();
-        }).then(function(json){
-            let i = 0;
-            while (json.flavor_text_entries[i].language.name!="es") {
-                i++;
-            }
-        let description = json.flavor_text_entries[i].flavor_text;
-        description = description.replace(/\n|\r/g, " ");
-        pokemon.description = description;
-    })
-    pokemonArray[i] = pokemon;  
-    
-      if(pokemonArray.length===maxPokemon+1){
-        //number = parseInt(Math.random()*maxPokemon-1)+1;
-        number = 1
-        console.timeEnd();
-        pokemonArray[1].showAll();
-      }
-    
-}
-
-function capitalize(word){
-    return `${word[0].toUpperCase()}${word.slice(1)}`;
-}
-
-function start(){ 
-  console.time();
-  if (pokemonArray.length==maxPokemon+1) {
-    pokemonArray[number].showAll();
-  }
-  else{
-    for (let i = 1; i <=maxPokemon; i++) {
-      buildPokemon(i);
-    }    
-  } 
-}
-
-function addOptions(array) {     
-    for (let i = 1; i < array.length; i++) {
-     var option = document.createElement("option");
-     option.text = array[i].name;
-     option.value = i;
-     option.onclick = ()=> showAll(2);
-     pokeSelector.add(option); 
-    }   
-}    
-
-function changeListener(){
-    let value = this.value;
-    number = value;
-    removeElements();
-    showAll(value);      
-}
-
- function setType(tipo, p){
+  setType(tipo, p){
     let conversion= {
         grass:"Hierba",
         ground:"Tierra",
@@ -275,7 +194,77 @@ function changeListener(){
         p.classList.add("background-bug");
         break;
     }
-    return conversion[tipo]
+    return conversion[tipo];
+  }
+
+  removeElements(){
+    while (main.lastElementChild) {
+       main.removeChild(main.lastElementChild);
+    } 
+  }
+}
+
+ async function buildPokemon(i){
+        let pokemon = new Poke();             
+        await fetch(`${url}${i}`).then(function(response){
+            return response.json();            
+        }).then(function(json){
+            pokemon.id = json.id; 
+            pokemon.name = capitalize(json.name);  
+            pokemon.weight = json.weight/10;
+            pokemon.height = json.height/10; 
+            for (let i = 0; i < json.types.length; i++) {     
+                pokemon.types[i] = json.types[i].type.name;  
+            }           
+        })
+        await fetch(`${urlImg}${i}.svg`).then(function(response){
+            return response.blob();            
+        }).then(function(blob){
+            pokemon.image = URL.createObjectURL(blob);                
+        })  
+        await fetch(`${urlDescription}${i}/`).then(function(response){
+            return response.json();
+        }).then(function(json){
+            let i = 0;
+            while (json.flavor_text_entries[i].language.name!="es") {
+                i++;
+            }
+        let description = json.flavor_text_entries[i].flavor_text;
+        description = description.replace(/\n|\r/g, " ");
+        pokemon.description = description;
+    })
+    pokemonArray[i] = pokemon;  
+    
+      if(pokemonArray.length===maxPokemon+1){
+        number = parseInt(Math.random()*maxPokemon-1)+1;      
+        number = 1;  
+        console.timeEnd();
+        pokemonArray[number].showAll();
+      }
+    
+}
+
+function capitalize(word){
+    return `${word[0].toUpperCase()}${word.slice(1)}`;
+}
+
+function start(){ 
+  searchSection.classList.remove('hidde'); 
+  console.time();
+  if (pokemonArray.length==maxPokemon+1) {
+    pokemonArray[number].showAll();
+  }
+  else{
+    for (let i = 1; i <=maxPokemon; i++) {
+      buildPokemon(i);
+    }    
+  } 
+}
+
+function changeListener(){
+    let value = this.value;
+    number = value; 
+    searcher(value);    
 }
 
 class Game{
@@ -284,7 +273,8 @@ class Game{
     this.right = 0;
     this.wrong = 0;
     this.correct;
-    this.newQuestion();     
+    this.newQuestion();  
+    searchSection.classList.add('hidde');  
   }
   newQuestion(){
     removeAll() 
@@ -364,6 +354,7 @@ function newGame(){
 }
 
 function pokedex(){
+  searchSection.classList.remove('hidde'); 
   removeAll()
   for (let i = 1; i <=maxPokemon; i++) {
     const image = document.createElement('img');
@@ -411,7 +402,30 @@ function startupTouch() {
     })  
 }
 
+function searcher(value){
+  let listOfPokemon = [];
+  while (list.lastElementChild) {
+    list.removeChild(list.lastElementChild);
+  } 
+  let ul = document.createElement ('ul');
+    for (let i = 1; i < pokemonArray.length; i++) {
+      if (pokemonArray[i].name.toLowerCase().includes(value.toLowerCase())) {
+        listOfPokemon.push(pokemonArray[i].name)
+        let li = document.createElement ('li');
+        ul.appendChild(li);        
+        li.appendChild(document.createElement('img')).src = pokemonArray[i].image; 
+        li.appendChild(document.createTextNode(pokemonArray[i].name)); 
+        li.onclick = ()=> {
+          number=i;
+          pokemonArray[number].showAll();
+          list.removeChild(list.lastElementChild);
+        }
 
+      }      
+    }
+  list.appendChild(ul);
+    return listOfPokemon;
+  } 
 
 const toggle = document.querySelector('.toggle');
 
