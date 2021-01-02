@@ -10,12 +10,107 @@ html{
     background-color: lavender;
 }
 
+header{
+    width: 100%;
+}
+
+nav {
+    background: rgb(202, 1, 1);
+    padding: 0 10px;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 20px;
+    padding: 7.5px 10px 7.5px 0;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+}
+.menu li a {
+    display: block;
+    padding: 5px;
+}
+.item {
+    width: 100%;
+    text-align: center;
+    display: none;
+    padding: 10px;
+}
+.active .item {
+    display: block;
+}
+.toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 body{
     display: flex;
     flex-direction: column;
-    font-size: 1.6rem;
-    
+    font-size: 1.6rem;    
 }
+
+.search{    
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+.search__bar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 5px 10px;
+}
+
+.search__list ul li{
+    list-style: none;
+    background-color: white;
+    border-bottom: 1px solid #0080ff;
+    padding: 3px;
+    color: #0080ff;
+    width: 100%;
+    cursor: pointer;
+}
+.search__list ul li:nth-of-type(1n+11) {
+    display: none;
+} 
+.search__list ul{    
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+}
+
+input{
+    border-radius: 20px;
+    height: 3em;
+    width: 70%;
+    margin-right: 5px;
+    font-size: 1em;
+    text-align: center;
+    outline: none;
+}
+input:focus{
+    border: 3px solid goldenrod;
+}
+
+li img{
+    width: 30px;
+    height: 30px;
+    margin-inline: 20px;
+}
+
 main{
     width: 100%;
     justify-content: center;
@@ -27,6 +122,7 @@ main{
     height: 10vh;
     position: absolute;
     min-width: max-content;
+    color: rgb(65, 14, 87);
     left: 5%;
     right: 5%;
     margin-top: 20px;
@@ -132,10 +228,6 @@ button{
     background-color: red;
 }
 
-.searcher{
-    visibility: hidden;
-}
-
 .pokedexC{
     display: inline-block;
     padding: 15px 20px;
@@ -203,94 +295,38 @@ button{
     background-color: rgb(98, 43, 226);
 }
 
-header{
-    width: 100%;
+.pointer{
+cursor: pointer;
 }
 
-nav {
-    background: rgb(202, 1, 1);
-    padding: 0 10px;
-}
-a {
-    color: white;
-    text-decoration: none;
-}
 
-.logo {
-    font-size: 20px;
-    padding: 7.5px 10px 7.5px 0;
-}
-
-.menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    list-style-type: none;
-}
-.menu li a {
-    display: block;
-    padding: 5px;
-}
-.item {
-    width: 100%;
-    text-align: center;
-    display: none;
-    padding: 10px;
-}
-.active .item {
-    display: block;
-}
-.toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-input{
-    border-radius: 20px;
-    height: 3em;
-    width: 70%;
-    margin-block: 5px;
-    padding: 5px 10px;
-    font-size: 1em;
-    text-align: center;
-}
-
-.search{
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-}
-
-li img{
-    width: 30px;
-    height: 30px;
-    margin-inline: 20px;
-}
-.list ul li{
-    list-style: none;
-    background-color: white;
-    border-bottom: 1px solid #0080ff;
-    padding: 3px;
-    color: #0080ff;
-    width: 100%;
-    cursor: pointer;
-}
-.list ul li:nth-of-type(1n+11) {
-    display: none;
-} 
-.list ul{    
-    position: absolute;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-}
 .hidde{
     display: none;
 }
 
-
-
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transition: 1s all;
+    opacity: 1;
+  }
+  
+  .loading .spin {
+    border: 3px solid hsla(185, 100%, 62%, 0.2);
+    border-top-color: #3cefff;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+  } 
 
 @media all and (min-width: 700px) {
     .logo {
@@ -324,9 +360,7 @@ li img{
         border-color: darkblue;
     }
 }
-
-
-    
+   
 @media screen and (min-width: 900px) {
     .description{
         display: flex;

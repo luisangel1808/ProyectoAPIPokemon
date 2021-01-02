@@ -9,10 +9,12 @@ const maxPokemon = 151;
 
 const main = document.querySelector('main');
 const counterContainer = document.createElement('div');
-document.querySelector('input').oninput = changeListener;
+const input = document.querySelector('input');
+input.oninput = changeListener;
 const menu = document.querySelector('.menu');
-const list = document.querySelector('.list');
+const list = document.querySelector('.search__list');
 const searchSection = document.querySelector('.search');
+const close = document.getElementById('close');
 
 class Poke{
     constructor(){
@@ -263,7 +265,6 @@ function start(){
 
 function changeListener(){
     let value = this.value;
-    number = value; 
     searcher(value);    
 }
 
@@ -428,6 +429,12 @@ function searcher(value){
   } 
 
 const toggle = document.querySelector('.toggle');
+close.onclick = ()=> {   
+  while (list.lastElementChild) {
+    list.removeChild(list.lastElementChild);
+  }  
+  input.value = "";
+};
 
 function toggleMenu() {
     if (menu.classList.contains('active')) {

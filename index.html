@@ -23,14 +23,19 @@
             </nav>
     </header>      
     <section class="search">
-        <input type="text" name="searcher" placeholder="Busca un Pokemón">
-        <div class="list">
-
+        <div class="search__bar">
+            <input type="text" name="searcher" placeholder="Busca un Pokemón">
+            <i id="close" class="far fa-times-circle pointer"></i>
+        </div>
+        <div class="search__list">
         </div>
     </section>
     <main>
-
+        <div class="loading">
+            <div class="spin"></div>
+            <h3>Cargando Pokemon</h3>
+        </div>
     </main>
-    <script src="main2.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
